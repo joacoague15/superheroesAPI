@@ -8,11 +8,6 @@ const PORT = 4000;
 
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-    console.log('TEST')
-    res.send('HI')
-});
-
 app.use('/heroes', heroesRoutes);
 
 app.listen(PORT, () => {
