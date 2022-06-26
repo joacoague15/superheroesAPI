@@ -187,4 +187,29 @@ router.get('/:id/stats', (req, res) => {
     }
 });
 
+router.post('/create', (req, res) => {
+    const createdHero = req.body
+
+    const name = createdHero.name
+    const power = parseInt(createdHero.power)
+    const durability = parseInt(createdHero.durability)
+    const intelligence = parseInt(createdHero.intelligence)
+    const imgLink = createdHero.imgLink
+
+    heroes.push({
+        id: heroes.length + 1,
+        name,
+        img: imgLink
+    })
+
+    heroesStats.push({
+        id: heroesStats.length + 1,
+        power,
+        durability,
+        intelligence
+    })
+
+    res.status(201).send(req.body)
+});
+
 export default router;
