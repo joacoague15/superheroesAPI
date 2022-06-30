@@ -2,6 +2,8 @@ import express from "express";
 
 const router = express.Router();
 
+import { SuperheroesRecruitment } from "../models/SuperheroesRecruitment.js";
+
 const heroes = [
     {
         id: 1,
@@ -186,6 +188,15 @@ router.get('/:id/stats', (req, res) => {
             res.send(heroStat);
     }
 });
+
+router.get('/checking', (req, res) => {
+    SuperheroesRecruitment.findAll()
+        .then(heroes => {
+            console.log('MY HEROES: ', heroes)
+            res.sendStatus(200)
+        })
+        .catch(err => console.log(err))
+})
 
 router.post('/create', (req, res) => {
     const createdHero = req.body
