@@ -18,8 +18,8 @@ export const SuperheroesRecruitment = db.define('t_heroes_to_recruit', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    c_img: {
-        type: DataTypes.STRING.BINARY,
+    c_imgURL: {
+        type: DataTypes.STRING,
         allowNull: false
     }
 }, {
@@ -27,5 +27,5 @@ export const SuperheroesRecruitment = db.define('t_heroes_to_recruit', {
 })
 
 SuperheroesRecruitment.sync()
-    .then(() => console.log('GREAT!'))
+    .then(() => console.log('Hero recruitment db synced'))
     .catch(err => console.log(err))
