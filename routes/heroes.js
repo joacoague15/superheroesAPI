@@ -5,11 +5,21 @@ const router = express.Router();
 import { SuperheroesRecruitment } from "../models/SuperheroesRecruitment.js";
 
 router.get('/', (req, res) => {
-    SuperheroesRecruitment.findAll()
+    const { page, pageSize } = req.query
+
+    const offset = (page - 1) * pageSize
+    const limit = pageSize
+
+
+
+    SuperheroesRecruitment.findAll({
+        limit,
+        offset
+    })
         .then(heroes => {
-            const allHeroesToRecruit = []
+            const heroesQueried = []
             heroes.map(hero => {
-                allHeroesToRecruit.push({
+                heroesQueried.push({
                     id: hero.id,
                     name: hero.c_name,
                     power: hero.c_power,
@@ -18,7 +28,8 @@ router.get('/', (req, res) => {
                     img: hero.c_imgURL
                 })
             })
-            res.send(allHeroesToRecruit);
+            console.log('HEROES QUERIED: ', heroesQueried)
+            res.send(heroesQueried);
         })
         .catch(err => console.log(err))
 });
