@@ -7,11 +7,13 @@ import (
 	"superheroesAPI/pkg/models"
 )
 
-func (h handler) GetHeroes(w http.ResponseWriter, _ *http.Request) {
+func (h Handler) ListHeroes(w http.ResponseWriter, _ *http.Request) {
 	var heroes []models.Hero
 
-	tx := h.DB.Table("heroes").Select("*").Limit(100)
+	tx := h.DB.Table("heroes").Debug().
+		Select("*").Limit(100)
 	tx.Find(&heroes)
+
 	if tx.Error != nil {
 		log.Println(tx.Error)
 	}

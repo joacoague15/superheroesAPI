@@ -8,7 +8,14 @@ type Hero struct {
 	Power        int64     `json:"power"`
 	Durability   int64     `json:"durability"`
 	Intelligence int64     `json:"intelligence"`
-	ImgURL       string    `json:"imgURL"`
+	Img          string    `json:"img"`
 	CreatedAt    time.Time `json:"createdAt"`
 	UpdatedAt    time.Time `json:"updatedAt"`
+}
+
+type User struct {
+	Id       int64  `json:"id" gorm:"primaryKey"`
+	Name     string `json:"name"`
+	Email    string `json:"email"`
+	Password string `json:"-"`
 }

@@ -9,7 +9,7 @@ import (
 	"superheroesAPI/pkg/models"
 )
 
-func (h handler) UpdateHero(w http.ResponseWriter, r *http.Request) {
+func (h Handler) UpdateHero(w http.ResponseWriter, r *http.Request) {
 	var hero models.Hero
 	id := chi.URLParam(r, "id")
 

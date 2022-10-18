@@ -9,7 +9,7 @@ import (
 	"superheroesAPI/pkg/models"
 )
 
-func (h handler) DeleteHero(w http.ResponseWriter, r *http.Request) {
+func (h Handler) DeleteHero(w http.ResponseWriter, r *http.Request) {
 	var hero models.Hero
 	id := chi.URLParam(r, "id")
 
