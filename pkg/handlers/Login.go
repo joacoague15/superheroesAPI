@@ -24,7 +24,8 @@ func (h Handler) Login(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
 
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
+		return
 	}
 
 	var userSearched models.User
@@ -39,7 +40,6 @@ func (h Handler) Login(w http.ResponseWriter, r *http.Request) {
 	tx := h.DB.Table("users").
 		Where("email = ?", userSearched.Email).
 		First(&userFound)
-	tx.Find(&userFound)
 
 	if tx.Error != nil {
 		log.Println(tx.Error)

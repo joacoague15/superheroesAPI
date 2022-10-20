@@ -10,7 +10,6 @@ import (
 )
 
 func (h Handler) Register(w http.ResponseWriter, r *http.Request) {
-	// Read to request body
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
@@ -21,10 +20,12 @@ func (h Handler) Register(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
 
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
+		return
 	}
 
 	var user models.User
+
 	err = json.Unmarshal(body, &user)
 	if err != nil {
 		log.Println(err)
@@ -34,6 +35,7 @@ func (h Handler) Register(w http.ResponseWriter, r *http.Request) {
 	tx := h.DB.Table("users").Create(&user)
 	if tx.Error != nil {
 		log.Println(err)
+		return
 	}
 
 	w.Header().Add("Content-Type", "application/json")

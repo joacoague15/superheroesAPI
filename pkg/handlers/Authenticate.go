@@ -20,6 +20,7 @@ func (h Handler) Authenticate(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
 		log.Println(err)
+		return
 	}
 
 	claims := token.Claims.(*jwt.RegisteredClaims)
@@ -32,6 +33,7 @@ func (h Handler) Authenticate(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		log.Println(err)
+		return
 	}
 
 }
