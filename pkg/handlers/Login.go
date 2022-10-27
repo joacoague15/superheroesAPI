@@ -28,7 +28,7 @@ func (h Handler) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var userSearched models.User
+	var userSearched models.PublicUser
 	var userFound models.User
 
 	err = json.Unmarshal(body, &userSearched)
@@ -43,18 +43,12 @@ func (h Handler) Login(w http.ResponseWriter, r *http.Request) {
 
 	if tx.Error != nil {
 		log.Println(tx.Error)
-		return
-	}
-
-	if userFound.Email == "" {
-		w.Header().Add("Content-Type", "application/json")
-		w.WriteHeader(http.StatusNoContent)
+		w.WriteHeader(http.StatusUnauthorized)
 		err = json.NewEncoder(w).Encode("User not found")
 		return
 	}
 
 	if userFound.Password != userSearched.Password {
-		w.Header().Add("Content-Type", "application/json")
 		w.WriteHeader(http.StatusForbidden)
 		err = json.NewEncoder(w).Encode("Password is incorrect")
 		return

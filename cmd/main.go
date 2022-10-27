@@ -23,7 +23,7 @@ func main() {
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
 		ExposedHeaders:   []string{"Link"},
-		AllowCredentials: false,
+		AllowCredentials: true,
 		MaxAge:           300, // Maximum value not ignored by any of major browsers
 	}))
 
@@ -37,6 +37,7 @@ func main() {
 	r.Post("/create", h.CreateHero)
 	r.Route("/{id}", func(r chi.Router) {
 		r.Get("/", h.GetHero)
+		r.Post("/add", h.AddHeroToTeam)
 		r.Delete("/delete", h.DeleteHero)
 		r.Patch("/update", h.UpdateHero)
 	})
