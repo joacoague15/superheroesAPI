@@ -35,7 +35,7 @@ func main() {
 	r.Post("/logout", h.Logout)
 	r.Get("/list", h.ListHeroes)
 	r.Post("/create", h.CreateHero)
-	r.Route("/{id}", func(r chi.Router) {
+	r.Route("/{userId}/{id}", func(r chi.Router) {
 		r.Get("/", h.GetHero)
 		r.Post("/add", h.AddHeroToTeam)
 		r.Delete("/delete", h.DeleteHero)

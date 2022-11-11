@@ -1,28 +1,32 @@
 package handlers
 
 import (
+	"encoding/json"
 	"github.com/go-chi/chi/v5"
-	"log"
 	"net/http"
 	"strconv"
 	"superheroesAPI/pkg/models"
 )
 
-func (h Handler) AddHeroToTeam(_ http.ResponseWriter, r *http.Request) {
+func (h Handler) AddHeroToTeam(w http.ResponseWriter, r *http.Request) {
+	userId, err := strconv.ParseInt(chi.URLParam(r, "userId"), 10, 64)
 	heroId, err := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
 
 	if err != nil {
-		log.Println(err)
+		_ = json.NewEncoder(w).Encode("Error adding team member")
+		w.WriteHeader(http.StatusInternalServerError)
 	}
 
 	teamMember := models.TeamMember{
-		// HARDCODED
-		UserId: 8,
+		UserId: userId,
 		HeroId: heroId,
 	}
 
+	err = json.NewEncoder(w).Encode("Team hero added")
+
 	tx := h.DB.Table("teamMembers").Debug().Create(&teamMember)
 	if tx.Error != nil {
-		log.Println(tx.Error)
+		_ = json.NewEncoder(w).Encode("Error adding team member")
+		w.WriteHeader(http.StatusInternalServerError)
 	}
 }

@@ -13,7 +13,7 @@ import (
 )
 
 func (h Handler) Login(w http.ResponseWriter, r *http.Request) {
-	// Read to request body
+
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
@@ -76,7 +76,7 @@ func (h Handler) Login(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Add("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
-	err = json.NewEncoder(w).Encode(token)
+	err = json.NewEncoder(w).Encode(userFound.Id)
 	if err != nil {
 		log.Println(err)
 		return
