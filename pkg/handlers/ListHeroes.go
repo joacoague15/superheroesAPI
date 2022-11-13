@@ -10,7 +10,7 @@ import (
 func (h Handler) ListHeroes(w http.ResponseWriter, _ *http.Request) {
 	var heroes []models.Hero
 
-	tx := h.DB.Table("heroes").Debug().
+	tx := h.DB.Table("heroes").
 		Select("*").Limit(100)
 	tx.Find(&heroes)
 
