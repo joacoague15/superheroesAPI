@@ -29,6 +29,8 @@ func (h Handler) AddHeroToTeam(w http.ResponseWriter, r *http.Request) {
 	tx.Find(&teamHeroes).
 		Count(&heroesCount)
 
+	heroIsAlreadyOnTeam(heroId, teamHeroes)
+
 	if tx.Error != nil {
 		log.Println(tx.Error)
 	}
@@ -40,6 +42,8 @@ func (h Handler) AddHeroToTeam(w http.ResponseWriter, r *http.Request) {
 
 	if heroesCount > 2 {
 		err = json.NewEncoder(w).Encode("You cannot have more than 3 heroes on your team")
+	} else if heroIsAlreadyOnTeam(heroId, teamHeroes) {
+		err = json.NewEncoder(w).Encode("You cannot have same hero twice")
 	} else {
 		err = json.NewEncoder(w).Encode("Team hero added")
 
@@ -50,4 +54,16 @@ func (h Handler) AddHeroToTeam(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+}
+
+func heroIsAlreadyOnTeam(idHero int64, heroesOnTeam []models.Hero) bool {
+	var isOnTheTeam = false
+
+	for _, hero := range heroesOnTeam {
+		if hero.Id == idHero {
+			isOnTheTeam = true
+		}
+	}
+
+	return isOnTheTeam
 }
